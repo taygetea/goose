@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+from lxml import html
+
+ddg = ''.join(open("/tmp/ddg").readlines())
+
+doc = html.fromstring(ddg)
+zipped = zip(doc.xpath('//*/div[@class="links_main links_deep"]/a/@href'), [e.text_content() for e in doc.xpath('//*/div[@class="links_main links_deep"]/a')])
+for i in zipped:
+    if "r.search.yahoo.com/cbclk" not in i[0]:
+        print (i[0] + '\t' + i[1]).encode('utf-8')
